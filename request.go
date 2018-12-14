@@ -60,8 +60,10 @@ func (t *Transmission) Do(ctx context.Context, method string, arguments, result 
 		return errors.New(respPayload.Result)
 	}
 
-	if err = json.Unmarshal(respPayload.Arguments, &result); err != nil {
-		return errors.Wrap(err, "failed to unmarshal response arguments")
+	if result != nil {
+		if err = json.Unmarshal(respPayload.Arguments, &result); err != nil {
+			return errors.Wrap(err, "failed to unmarshal response arguments")
+		}
 	}
 
 	return nil

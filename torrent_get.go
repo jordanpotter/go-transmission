@@ -9,7 +9,7 @@ import (
 const TorrentGet = "torrent-get"
 
 type TorrentGetRequest struct {
-	IDs    []string `json:"ids,omitempty"`
+	IDs    []int    `json:"ids,omitempty"`
 	Fields []string `json:"fields,omitempty"`
 }
 
@@ -17,10 +17,10 @@ type TorrentGetResponse struct {
 	Torrents []Torrent `json:"torrents"`
 }
 
-func (t *Transmission) Torrent(ctx context.Context, id string) (*Torrent, error) {
+func (t *Transmission) Torrent(ctx context.Context, id int) (*Torrent, error) {
 	req := TorrentGetRequest{
-		IDs:    []string{id},
-		Fields: torrentFields(),
+		IDs:    []int{id},
+		Fields: TorrentFields(),
 	}
 
 	var resp TorrentGetResponse
@@ -39,7 +39,7 @@ func (t *Transmission) Torrent(ctx context.Context, id string) (*Torrent, error)
 
 func (t *Transmission) Torrents(ctx context.Context) ([]Torrent, error) {
 	req := TorrentGetRequest{
-		Fields: torrentFields(),
+		Fields: TorrentFields(),
 	}
 
 	var resp TorrentGetResponse

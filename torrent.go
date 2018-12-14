@@ -153,7 +153,7 @@ type TorrentTrackerStat struct {
 	Tier                  int    `json:"tier"`
 }
 
-func torrentFields() []string {
+func TorrentFields() []string {
 	torrentType := reflect.TypeOf(Torrent{})
 
 	var jsonKeys []string
