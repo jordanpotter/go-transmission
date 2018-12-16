@@ -1,4 +1,4 @@
-# Transmission [![](https://godoc.org/github.com/jordanpotter/go-transmission?status.svg)](https://godoc.org/github.com/jordanpotter/go-transmission)
+# go-transmission [![](https://godoc.org/github.com/jordanpotter/go-transmission?status.svg)](https://godoc.org/github.com/jordanpotter/go-transmission) [![Go Report Card](https://goreportcard.com/badge/github.com/jordanpotter/go-transmission)](https://goreportcard.com/report/github.com/jordanpotter/go-transmission) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 Go client library to interface with Transmission
 
