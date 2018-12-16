@@ -2,6 +2,7 @@ package transmission
 
 import (
 	"context"
+	"encoding/base64"
 
 	"github.com/pkg/errors"
 )
@@ -28,9 +29,32 @@ type TorrentAddResponse struct {
 	TorrentDuplicate *Torrent `json:"torrent-duplicate"`
 }
 
-func (t *Transmission) TorrentAdd(ctx context.Context, file, path string, paused bool) (*Torrent, bool, error) {
+func (t *Transmission) TorrentAddWithURL(ctx context.Context, url, path string, paused bool) (*Torrent, bool, error) {
 	req := TorrentAddRequest{
-		Filename:    file,
+		Filename:    url,
+		DownloadDir: path,
+		Paused:      paused,
+	}
+
+	var resp TorrentAddResponse
+	if err := t.Do(ctx, TorrentAdd, &req, &resp); err != nil {
+		return nil, false, errors.Wrap(err, "failed request")
+	}
+
+	if resp.TorrentAdded != nil {
+		return resp.TorrentAdded, false, nil
+	} else if resp.TorrentDuplicate != nil {
+		return resp.TorrentDuplicate, true, nil
+	} else {
+		return nil, false, errors.New("received no torrent data")
+	}
+}
+
+func (t *Transmission) TorrentAddWithFile(ctx context.Context, data []byte, path string, paused bool) (*Torrent, bool, error) {
+	b := base64.StdEncoding.EncodeToString(data)
+
+	req := TorrentAddRequest{
+		MetaInfo:    b,
 		DownloadDir: path,
 		Paused:      paused,
 	}

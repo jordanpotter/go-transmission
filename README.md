@@ -6,7 +6,7 @@ Go client library to interface with Transmission
 t := transmission.New(url, username, password)
 
 // Add a torrent
-torrent, err := t.TorrentAdd(ctx,
+torrent, err := t.TorrentAddWithURL(ctx,
         "http://releases.ubuntu.com/18.04/ubuntu-18.04.1-desktop-amd64.iso.torrent",
         "/download/path", false)
 
