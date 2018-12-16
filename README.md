@@ -1,4 +1,4 @@
-# Transmission
+# Transmission [![](https://godoc.org/github.com/jordanpotter/go-transmission?status.svg)](https://godoc.org/github.com/jordanpotter/go-transmission)
 
 Go client library to interface with Transmission
 

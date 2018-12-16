@@ -1,3 +1,5 @@
+// Package transmission provides functions and types to simplify interacting
+// with a Transmission daemon.
 package transmission
 
 import (
@@ -12,6 +14,7 @@ type Transmission struct {
 	token      string
 }
 
+// New returns a new Transmission client
 func New(url, username, password string) *Transmission {
 	return &Transmission{
 		httpClient: &http.Client{},

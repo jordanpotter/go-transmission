@@ -14,6 +14,8 @@ type TorrentSetLocationRequest struct {
 	Move     bool   `json:"move"`
 }
 
+// TorrentSetLocation changes the location of the torrent's data. If moveData
+// is false, will not move the old data to the new location.
 func (t *Transmission) TorrentSetLocation(ctx context.Context, id int, path string, moveData bool) error {
 	req := TorrentSetLocationRequest{
 		IDs:      []int{id},

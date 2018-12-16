@@ -21,6 +21,8 @@ type response struct {
 	Arguments json.RawMessage `json:"arguments"`
 }
 
+// Do performs a Transmission operation. If provided a non-nil result
+// parameter, will use the response from Transmission to hydrate result.
 func (t *Transmission) Do(ctx context.Context, method string, arguments, result interface{}) error {
 	reqPayload := request{method, arguments}
 	b, err := json.Marshal(reqPayload)

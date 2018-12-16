@@ -12,6 +12,7 @@ type TorrentStopRequest struct {
 	IDs []int `json:"ids,omitempty"`
 }
 
+// TorrentStop stops torrent with id.
 func (t *Transmission) TorrentStop(ctx context.Context, id int) error {
 	req := TorrentStopRequest{
 		IDs: []int{id},

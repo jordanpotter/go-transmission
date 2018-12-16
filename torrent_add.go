@@ -29,6 +29,7 @@ type TorrentAddResponse struct {
 	TorrentDuplicate *Torrent `json:"torrent-duplicate"`
 }
 
+// TorrentAddWithURL adds a torrent given the URL.
 func (t *Transmission) TorrentAddWithURL(ctx context.Context, url, path string, paused bool) (*Torrent, bool, error) {
 	req := TorrentAddRequest{
 		Filename:    url,
@@ -50,6 +51,7 @@ func (t *Transmission) TorrentAddWithURL(ctx context.Context, url, path string, 
 	}
 }
 
+// TorrentAddWithFile adds a torrent given the .torrent file data.
 func (t *Transmission) TorrentAddWithFile(ctx context.Context, data []byte, path string, paused bool) (*Torrent, bool, error) {
 	b := base64.StdEncoding.EncodeToString(data)
 

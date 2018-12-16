@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Torrent contains all of the fields returned by Transmission for a torrent
 type Torrent struct {
 	ID                      int                  `json:"id"`
 	ActivityDate            int                  `json:"activityDate"`
@@ -153,6 +154,8 @@ type TorrentTrackerStat struct {
 	Tier                  int    `json:"tier"`
 }
 
+// TorrentFields returns all of the different fields that can be requested when
+// retrieving torrents
 func TorrentFields() []string {
 	torrentType := reflect.TypeOf(Torrent{})
 

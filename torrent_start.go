@@ -12,6 +12,7 @@ type TorrentStartRequest struct {
 	IDs []int `json:"ids,omitempty"`
 }
 
+// TorrentStart starts torrent with id.
 func (t *Transmission) TorrentStart(ctx context.Context, id int) error {
 	req := TorrentStartRequest{
 		IDs: []int{id},

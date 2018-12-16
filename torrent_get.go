@@ -17,6 +17,7 @@ type TorrentGetResponse struct {
 	Torrents []Torrent `json:"torrents"`
 }
 
+// Torrent retrieves torrent with id.
 func (t *Transmission) Torrent(ctx context.Context, id int) (*Torrent, error) {
 	req := TorrentGetRequest{
 		IDs:    []int{id},
@@ -37,6 +38,7 @@ func (t *Transmission) Torrent(ctx context.Context, id int) (*Torrent, error) {
 	return &resp.Torrents[0], nil
 }
 
+// Torrents retrieves all torrents.
 func (t *Transmission) Torrents(ctx context.Context) ([]Torrent, error) {
 	req := TorrentGetRequest{
 		Fields: TorrentFields(),

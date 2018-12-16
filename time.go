@@ -8,6 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Time is a wrapper around time.Time with custom JSON serialization logic.
 type Time struct {
 	time.Time
 }
