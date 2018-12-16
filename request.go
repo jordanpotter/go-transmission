@@ -33,7 +33,7 @@ func (t *Transmission) Do(ctx context.Context, method string, arguments, result 
 		return errors.Wrap(err, "failed to create request")
 	}
 
-	req.WithContext(ctx)
+	req = req.WithContext(ctx)
 	req.Header.Add(csrfHeader, t.token)
 	req.SetBasicAuth(t.username, t.password)
 
