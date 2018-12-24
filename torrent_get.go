@@ -9,18 +9,18 @@ import (
 const TorrentGet = "torrent-get"
 
 type TorrentGetRequest struct {
-	IDs    []int    `json:"ids,omitempty"`
-	Fields []string `json:"fields,omitempty"`
+	IDs    []interface{} `json:"ids,omitempty"`
+	Fields []string      `json:"fields,omitempty"`
 }
 
 type TorrentGetResponse struct {
 	Torrents []Torrent `json:"torrents"`
 }
 
-// Torrent retrieves torrent with id.
-func (t *Transmission) Torrent(ctx context.Context, id int) (*Torrent, error) {
+// Torrent retrieves torrent by id or hash.
+func (t *Transmission) Torrent(ctx context.Context, id interface{}) (*Torrent, error) {
 	req := TorrentGetRequest{
-		IDs:    []int{id},
+		IDs:    []interface{}{id},
 		Fields: TorrentFields(),
 	}
 
