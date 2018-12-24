@@ -17,7 +17,7 @@ type TorrentGetResponse struct {
 	Torrents []Torrent `json:"torrents"`
 }
 
-// Torrent retrieves torrent by id or hash.
+// Torrent retrieves torrent with id or hash.
 func (t *Transmission) Torrent(ctx context.Context, id interface{}) (*Torrent, error) {
 	req := TorrentGetRequest{
 		IDs:    []interface{}{id},
@@ -36,6 +36,21 @@ func (t *Transmission) Torrent(ctx context.Context, id interface{}) (*Torrent, e
 	}
 
 	return &resp.Torrents[0], nil
+}
+
+// TorrentExists returns whether torrent with id or hash exists.
+func (t *Transmission) TorrentExists(ctx context.Context, id interface{}) (bool, error) {
+	req := TorrentGetRequest{
+		IDs:    []interface{}{id},
+		Fields: []string{"id"},
+	}
+
+	var resp TorrentGetResponse
+	if err := t.Do(ctx, TorrentGet, &req, &resp); err != nil {
+		return false, errors.Wrap(err, "failed request")
+	}
+
+	return len(resp.Torrents) != 0, nil
 }
 
 // Torrents retrieves all torrents.
