@@ -2,7 +2,6 @@ package transmission
 
 import (
 	"context"
-	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -52,27 +51,6 @@ func (t *Transmission) TorrentExists(ctx context.Context, id interface{}) (bool,
 	}
 
 	return len(resp.Torrents) != 0, nil
-}
-
-// TorrentExistsInPath returns whether a torrent exists that has a download
-// directory in path.
-func (t *Transmission) TorrentExistsInPath(ctx context.Context, path string) (bool, error) {
-	req := TorrentGetRequest{
-		Fields: []string{"downloadDir"},
-	}
-
-	var resp TorrentGetResponse
-	if err := t.Do(ctx, TorrentGet, &req, &resp); err != nil {
-		return false, errors.Wrap(err, "failed request")
-	}
-
-	for _, torrent := range resp.Torrents {
-		if strings.Index(torrent.DownloadDir, path) == 0 {
-			return true, nil
-		}
-	}
-
-	return false, nil
 }
 
 // Torrents retrieves all torrents.
