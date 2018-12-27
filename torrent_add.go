@@ -30,7 +30,7 @@ type TorrentAddResponse struct {
 }
 
 // TorrentAddWithURL adds a torrent given the URL.
-func (t *Transmission) TorrentAddWithURL(ctx context.Context, url, path string, paused bool) (*Torrent, bool, error) {
+func (t *Transmission) TorrentAddWithURL(ctx context.Context, url, path string, paused bool) (torrent *Torrent, added bool, err error) {
 	req := TorrentAddRequest{
 		Filename:    url,
 		DownloadDir: path,
@@ -43,16 +43,16 @@ func (t *Transmission) TorrentAddWithURL(ctx context.Context, url, path string, 
 	}
 
 	if resp.TorrentAdded != nil {
-		return resp.TorrentAdded, false, nil
+		return resp.TorrentAdded, true, nil
 	} else if resp.TorrentDuplicate != nil {
-		return resp.TorrentDuplicate, true, nil
+		return resp.TorrentDuplicate, false, nil
 	} else {
 		return nil, false, errors.New("received no torrent data")
 	}
 }
 
 // TorrentAddWithFile adds a torrent given the .torrent file data.
-func (t *Transmission) TorrentAddWithFile(ctx context.Context, data []byte, path string, paused bool) (*Torrent, bool, error) {
+func (t *Transmission) TorrentAddWithFile(ctx context.Context, data []byte, path string, paused bool) (torrent *Torrent, added bool, err error) {
 	b := base64.StdEncoding.EncodeToString(data)
 
 	req := TorrentAddRequest{
@@ -67,9 +67,9 @@ func (t *Transmission) TorrentAddWithFile(ctx context.Context, data []byte, path
 	}
 
 	if resp.TorrentAdded != nil {
-		return resp.TorrentAdded, false, nil
+		return resp.TorrentAdded, true, nil
 	} else if resp.TorrentDuplicate != nil {
-		return resp.TorrentDuplicate, true, nil
+		return resp.TorrentDuplicate, false, nil
 	} else {
 		return nil, false, errors.New("received no torrent data")
 	}
