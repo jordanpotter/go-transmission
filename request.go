@@ -36,7 +36,7 @@ func (t *Transmission) Do(ctx context.Context, method string, arguments, result 
 	}
 
 	req = req.WithContext(ctx)
-	req.Header.Add(csrfHeader, t.token)
+	req.Header.Add(csrfHeader, t.currentToken())
 	req.SetBasicAuth(t.username, t.password)
 
 	resp, err := t.httpClient.Do(req)
@@ -45,7 +45,7 @@ func (t *Transmission) Do(ctx context.Context, method string, arguments, result 
 	}
 	defer resp.Body.Close()
 
-	t.token = resp.Header.Get("X-Transmission-Session-Id")
+	t.updateToken(resp.Header.Get("X-Transmission-Session-Id"))
 
 	if resp.StatusCode == http.StatusConflict {
 		return t.Do(ctx, method, arguments, result)

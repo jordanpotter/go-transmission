@@ -4,6 +4,7 @@ package transmission
 
 import (
 	"net/http"
+	"sync"
 )
 
 type Transmission struct {
@@ -12,6 +13,7 @@ type Transmission struct {
 	username   string
 	password   string
 	token      string
+	tokenLock  sync.Mutex
 }
 
 // New returns a new Transmission client
