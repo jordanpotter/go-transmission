@@ -20,7 +20,7 @@ type Transmission struct {
 func New(url, username, password string) *Transmission {
 	return &Transmission{
 		httpClient: &http.Client{},
-		url:        url + "/transmission/rpc",
+		url:        url + "/transmission/rpc/",
 		username:   username,
 		password:   password,
 	}
