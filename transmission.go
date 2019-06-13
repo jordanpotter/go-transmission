@@ -4,12 +4,15 @@ package transmission
 
 import (
 	"net/http"
+	"net/url"
 	"sync"
+
+	"github.com/pkg/errors"
 )
 
 type Transmission struct {
 	httpClient *http.Client
-	url        string
+	endpoint   string
 	username   string
 	password   string
 	token      string
@@ -17,11 +20,17 @@ type Transmission struct {
 }
 
 // New returns a new Transmission client
-func New(url, username, password string) *Transmission {
+func New(endpoint, username, password string) (*Transmission, error) {
+	if endpoint == "" {
+		return nil, errors.New("endpoint cannot be empty")
+	} else if _, err := url.Parse(endpoint); err != nil {
+		return nil, errors.Wrap(err, "failed to parse endpoint")
+	}
+
 	return &Transmission{
 		httpClient: &http.Client{},
-		url:        url + "/transmission/rpc/",
+		endpoint:   endpoint + "/transmission/rpc/",
 		username:   username,
 		password:   password,
-	}
+	}, nil
 }

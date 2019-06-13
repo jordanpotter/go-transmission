@@ -3,7 +3,7 @@
 Go client library to interface with Transmission
 
 ```golang
-t := transmission.New(url, username, password)
+t, err := transmission.New(endpoint, username, password)
 
 // Add a torrent
 torrent, err := t.TorrentAddWithURL(ctx,

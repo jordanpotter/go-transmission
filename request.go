@@ -30,7 +30,7 @@ func (t *Transmission) Do(ctx context.Context, method string, arguments, result 
 		return errors.Wrap(err, "failed to marshal request")
 	}
 
-	req, err := http.NewRequest("POST", t.url, bytes.NewBuffer(b))
+	req, err := http.NewRequest("POST", t.endpoint, bytes.NewBuffer(b))
 	if err != nil {
 		return errors.Wrap(err, "failed to create request")
 	}

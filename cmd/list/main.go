@@ -9,20 +9,23 @@ import (
 )
 
 var (
-	url      string
+	endpoint string
 	username string
 	password string
 )
 
 func init() {
-	flag.StringVar(&url, "url", "", "transmission url")
+	flag.StringVar(&endpoint, "endpoint", "", "transmission endpoint")
 	flag.StringVar(&username, "username", "", "transmission username")
 	flag.StringVar(&password, "password", "", "transmission password")
 	flag.Parse()
 }
 
 func main() {
-	t := transmission.New(url, username, password)
+	t, err := transmission.New(endpoint, username, password)
+	if err != nil {
+		panic(err)
+	}
 
 	torrents, err := t.Torrents(context.Background())
 	if err != nil {
