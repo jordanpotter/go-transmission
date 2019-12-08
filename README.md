@@ -11,7 +11,7 @@ torrent, err := t.TorrentAddWithURL(ctx,
         "/download/path", false)
 
 // Get a torrent
-torrent, err := t.Torrent(ctx, id)
+torrent, added, err := t.Torrent(ctx, id)
 
 // Get all torrents
 torrents, err := t.Torrents(ctx)
